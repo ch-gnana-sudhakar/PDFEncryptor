@@ -1,0 +1,25 @@
+package com.fis.utils;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
+import com.lowagie.text.pdf.PdfWriter;
+
+public class PdfEncryptor {
+	public static void main(String args[]) throws IOException, DocumentException {
+		PdfEncryptor pe = new PdfEncryptor();
+		pe.encryptPdf("C:\\Users\\e3024212\\Desktop\\AICPCxxxx-2018.pdf", "C:\\\\Users\\\\e3024212\\\\Desktop\\\\AICPCxxxxx-2018_Protected.pdf", "userPass".getBytes(), "owner".getBytes());
+	}
+	public void encryptPdf(String src, String dest, byte[] userPassword, byte[] ownerPassword) throws IOException, DocumentException {
+	    PdfReader reader = new PdfReader(src);
+	    PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
+	    stamper.setEncryption(userPassword, ownerPassword,
+	        PdfWriter.ALLOW_PRINTING, PdfWriter.ENCRYPTION_AES_128);
+	    stamper.close();
+	    reader.close();
+	    System.out.println("Program successfully terminated");
+	}
+}
